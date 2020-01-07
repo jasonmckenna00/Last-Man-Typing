@@ -41,24 +41,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     var AlienXVel = 1;
-    var alien = new Alien();
     var alienArray = []
-    for ( let i = 0; i< 4; i++){
-        alienArray.push(new Alien());
+
+    var delay = Math.floor(Math.random() * 2500);
+    setInterval(()=>alienArray.push(new Alien()),delay)
+
+
+    function randomSpawn(i){
+        setTimeout(function () {
+            alienArray[i].update()
+        }, 1000*i)
     }
 
-    function draw(){
-        requestAnimationFrame(draw)
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < alienArray.length; i++){
-            let delay = Math.floor(Math.random() * 1000);
-            console.log(delay)
-            setTimeout( alienArray[i].update(), delay);
-            
-        }
-        alien.update();
-        AlienXVel += 1;
+function draw(){
+    requestAnimationFrame(draw)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < alienArray.length; i++){
+        // let delay = Math.floor(Math.random() * 1000);
+        // console.log(delay)
+        alienArray[i].update();
+        
+        
+        
     }
-    // setInterval(draw,75);
-    draw()
+    // alien.update();
+}
+// setInterval(draw,75);
+draw()
   });
