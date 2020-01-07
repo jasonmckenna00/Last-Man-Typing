@@ -7,18 +7,34 @@ class Game {
         this.ctx = ctx;
         this.alienArray = [];
         this.wordArray = [];
-        this.spawnRate = 5000;
-        this.delay = Math.floor(Math.random() * this.spawnRate);
+        this.delay = Math.floor(Math.random() * 5000);
         this.draw = this.draw.bind(this)
-
-
-        setInterval(()=>{
-            let alien = new Alien(this.ctx,this.canvas);
-            this.alienArray.push(alien);
-            this.wordArray.push(alien.word);
-        },this.delay)
+        this.generateAliens = this.generateAliens.bind(this);
+        this.createAlien = this.createAlien.bind(this);
+        this.generateAliens()
+        
 
     }
+
+
+        createAlien(ctx,canvas){
+            let alien = new Alien(ctx,canvas);
+            this.alienArray.push(alien);
+            this.wordArray.push(alien.word);
+        }
+
+
+
+        generateAliens(){
+            let delay = Math.floor(Math.random() * 5000);
+
+            setTimeout(()=>{
+                this.createAlien(this.ctx,this.canvas);
+                this.generateAliens();
+            },delay)
+        }
+
+
 
     draw(){
         requestAnimationFrame(this.draw)
