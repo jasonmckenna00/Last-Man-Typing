@@ -10,62 +10,73 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     const ctx = canvas.getContext("2d");
-    // const game = new Game();
-    // new GameView(game, ctx).start();
+    var randomWords = require('random-words')
 
     
 
 
     function Alien(){
         this.size = 30;
-        this.AlienXVel = 1;
+        this.AlienPos = 1;
+        this.dx = .5;
         this.rndPos = Math.floor(Math.random() * 320);
+        this.rendered = 1;
+        this.word = randomWords();
+        
         
 
         this.draw = function (){
             // debugger
             ctx.beginPath();
-            ctx.rect(0 + this.AlienXVel,this.rndPos,this.size/2,this.size);
+            ctx.rect(0 + this.AlienPos,this.rndPos,this.size/2,this.size);
             ctx.fillStyle = '#ff0000';
             ctx.fill();
             ctx.closePath();
+
+            ctx.fillText(this.word, 0 + this.AlienPos, this.rndPos - 5)
             // console.log('asas')
         }
 
         this.update = function(){
-            this.AlienXVel += 1;
-            this.draw();
+            this.AlienPos += this.dx;
+            if (this.AlienPos >= canvas.width){
+                // console.log(alienArray.length)
+                this.rendered = 0;
+            } else {
+                this.draw();
+            }
         }
 
 
     }
 
-    var AlienXVel = 1;
-    var alienArray = []
+    var alienArray = [];
+    var wordArray = [];
+    var delay = Math.floor(Math.random() * 5000);
 
-    var delay = Math.floor(Math.random() * 2500);
-    setInterval(()=>alienArray.push(new Alien()),delay)
-
-
-    function randomSpawn(i){
-        setTimeout(function () {
-            alienArray[i].update()
-        }, 1000*i)
-    }
+    setInterval(()=>{
+        let alien = new Alien();
+        alienArray.push(alien);
+        wordArray.push(alien.word);
+        // console.log(wordArray)
+    },delay)
+    
+    
+    
 
 function draw(){
-    // requestAnimationFrame(draw)
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    requestAnimationFrame(draw)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < alienArray.length; i++){
-        // let delay = Math.floor(Math.random() * 1000);
-        // console.log(delay)
-        alienArray[i].update();
-        
-        
-        
+        if (alienArray[i].rendered){
+            alienArray[i].update();
+        } else {
+            alienArray.splice(i,1);
+            wordArray.splice(i,1);
+        }
     }
     // alien.update();
 }
 // setInterval(draw,75);
 draw()
-  });
+});
