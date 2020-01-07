@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 function draw(){
-    requestAnimationFrame(draw)
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // requestAnimationFrame(draw)
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < alienArray.length; i++){
         // let delay = Math.floor(Math.random() * 1000);
         // console.log(delay)
