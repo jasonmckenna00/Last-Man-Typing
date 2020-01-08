@@ -2,12 +2,12 @@ var randomWords = require('random-words')
 
 
 class Alien{
-    constructor(ctx, canvas){
+    constructor(ctx, canvas, dx){
         this.ctx = ctx;
         this.canvas = canvas;
         this.size = 30;
         this.AlienPos = 1;
-        this.dx = .5;
+        this.dx = dx;
         this.rndPos = Math.floor(Math.random() * 270) + 30;
         this.rendered = 1;
         this.word = randomWords();
