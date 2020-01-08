@@ -8,7 +8,7 @@ class Alien{
         this.size = 30;
         this.AlienPos = 1;
         this.dx = dx;
-        this.rndPos = Math.floor(Math.random() * 270) + 30;
+        this.rndPos = Math.floor(Math.random() * 10) * 27 + 30;
         this.rendered = 1;
         this.word = randomWords();
         
@@ -21,7 +21,9 @@ class Alien{
         this.ctx.fillStyle = '#ff0000';
         this.ctx.fill();
         this.ctx.closePath();
-        this.ctx.fillText(this.word, 0 + this.AlienPos, this.rndPos - 5)
+        this.ctx.font = '15px Verdana';
+        this.ctx.shadowBlur = 4;
+        this.ctx.fillText(this.word, 0 + this.AlienPos, this.rndPos - 5);
     }
 
     update(){

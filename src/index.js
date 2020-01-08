@@ -10,16 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.height = 320;
     const ctx = canvas.getContext("2d");
     const game = new Game(canvas, ctx);
-    game.draw();
+    // while (!game.gameOver()){
+        // 
+        // }
+    // while(!game.gameOver()){
+            
+        game.playGame();
+    // }
 
-
-
-    // const userForm = document.createElement('form')
-    //     .addEventListener('submit', handleSubmit(e));
-
-    // const userGuess = document.createElement('input');
-    // userForm.appendChild(userGuess);
-    // document.body.appendChild(userForm);
     const userForm = document.getElementById('getUserInput');
     const userInput = document.getElementById('userInput');
 
