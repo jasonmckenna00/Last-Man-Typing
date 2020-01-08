@@ -7,13 +7,14 @@ class Game {
         this.ctx = ctx;
         this.alienArray = [];
         this.wordArray = [];
+        this.typedChars = 0;
         this.dx = 0.5;
         this.score = 0;
         this.lives = 10;
         this.spawnrate = -2000;
         this.time = 1;
-        this.mins = this.time / 60;
-        // this.wpm = this.score / this.mins;
+        // this.mins = this.time / 60;
+        this.wpm = 0;
         this.wordsDisplayed = false;
 
 
@@ -60,7 +61,7 @@ class Game {
 
     checkWord(word){
         let i = this.wordArray.indexOf(word);
-        // this.timer()
+        this.typedChars += word.length;
         if (i != -1){
             this.score += 1;
             this.alienArray.splice(i,1);
@@ -68,21 +69,22 @@ class Game {
             this.wordsDisplayed = this.wordArray.length ? true : false; 
             
         }
-        // this.timer()
+    }
+
+    wordPerMinute(word){
+        this.wpm = (word.length / 5) / this.mins;
     }
 
     
     timer(){
         if (this.wordsDisplayed){
-            // clearInterval(timeOn);
-            // setTimeout(()=> {this.time += 1}, 1000);
             this.time += 1;
+
+            this.wpm = 1.5*(this.typedChars/5) / (this.time/60);
         }
         else {
-            // clearInterval(timeOn)
             return null;
         }
-
     }
     
     
@@ -92,7 +94,7 @@ class Game {
         this.ctx.fillText('Score: ' + this.score, this.canvas.width - 60, 30);
         this.ctx.fillText('lives ' + this.lives, this.canvas.width - 60, 60);
         this.ctx.fillText('Time ' + this.time, this.canvas.width - 100, 90);
-        this.ctx.fillText('WPM ' + (this.score/this.time)*60, this.canvas.width - 100, 120);
+        this.ctx.fillText('WPM ' + this.wpm, this.canvas.width - 100, 120);
         this.ctx.fillText('wordsDisplayed ' + this.wordsDisplayed, this.canvas.width - 150, 150);
 
 
@@ -134,6 +136,8 @@ class Game {
         this.lives = 10;
         this.spawnrate = 0;
         this.time = 0;
+        // this.wpm = 0;
+        this.typedChars = 0;
         clearInterval(this.timer())
         document.removeEventListener('keydown',this.restartgame,false)
     }
