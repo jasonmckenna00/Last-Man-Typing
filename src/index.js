@@ -10,13 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.height = 320;
     const ctx = canvas.getContext("2d");
     const game = new Game(canvas, ctx);
-    // while (!game.gameOver()){
-        // 
-        // }
-    // while(!game.gameOver()){
-            
-        game.playGame();
-    // }
+
+    game.playGame();
+
 
     const userForm = document.getElementById('getUserInput');
     const userInput = document.getElementById('userInput');
