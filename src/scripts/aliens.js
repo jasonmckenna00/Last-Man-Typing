@@ -1,9 +1,9 @@
 import { inherits } from 'util';
 var img = new Image();
 img.src = '../../dist/assets/spritesheet1.png';
-// img.onload = function (){
-//     init();
-// }
+// img.src = '../../dist/assets/pinkship.png';
+
+
 var randomWords = require('random-words')
 
 
@@ -15,54 +15,35 @@ class Alien{
         this.size = 30;
         this.AlienPos = 1;
         this.dx = dx;
-        this.rndPos = Math.floor(Math.random() * 10) * 27 + 30;
+        this.rndPos = Math.floor(Math.random() * 10) * 27 + 60;
         this.rendered = 1;
         this._index = 0;
         this.delay = 0;
         this.word = randomWords();
-        this.frames = [0,1,2,3,4,5];
-        
+        this.frames = [0,232,2*232,3*232,4*232,5*232];
+        this.currentFrame = 0;
     }
 
     
-    init(){
-        // if (frame === 9) frame = 6;
-        const scale = .25;
-        const width = 232;
-        const height = 385;
-        const scaledW = scale * width;
-        const scaledH = scale * height;
-        this.ctx.drawImage(img, 
-                this.AlienPos, this.rndPos, 
-                scaledW, scaledH,
-                0,0,
-                scaledW,scaledH)
-    }
 
     draw(){
         var frame;
         const max = this.frames.length;
-        const idx = Math.floor(this._index);
-        frame = this.frames[idx % max];
+
+        frame = this.frames[this.currentFrame % max];
 
         this.ctx.fillStyle = '#FFFFFF';
-        const scale = .25;
+        const scale = .20;
         const width = 232;
         const height = 385;
         const scaledW = scale * width;
         const scaledH = scale * height;
-        
-        // this.ctx.drawImage(img, 
-        //         this.AlienPos + (frame * scaledW), this.rndPos + (frame * scaledH), 
-        //         scaledW, scaledH,
-        //         0,0,
-        //         scaledW,scaledH
-        //         );
-        this.ctx.drawImage(img, this.AlienPos, this.rndPos, scaledW, scaledH);
 
-        this.ctx.font = '20px Verdana';
+        this.ctx.drawImage(img, frame, 0, width, height,this.AlienPos, this.rndPos, scaledW, scaledH);
+
+        this.ctx.font = '25px Roboto';
         this.ctx.shadowBlur = 4;
-        this.ctx.fillText(this.word, 0 + this.AlienPos, this.rndPos - 5);
+        this.ctx.fillText(this.word, 10 + this.AlienPos, this.rndPos - 2);
     }
 
     update(count){
@@ -71,8 +52,8 @@ class Alien{
             this.rendered = 0;
         } else {
             this._index += this.dx;
-            // this.frameCount += 1;
-            // this.frame = (this.frame + 1) % 6;
+            this.currentFrame += 1;
+            // this.
             this.draw();
         }
     }

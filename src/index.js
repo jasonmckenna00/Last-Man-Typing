@@ -1,8 +1,8 @@
 import Alien from './scripts/aliens'
 import Game from './scripts/game';
 
-
-
+var background = new Image();
+background.src = '../dist/assets/giphy.gif'
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const ctx = canvas.getContext("2d");
     const game = new Game(canvas, ctx);
 
+    
     game.playGame();
 
 

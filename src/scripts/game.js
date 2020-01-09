@@ -8,7 +8,7 @@ class Game {
         this.alienArray = [];
         this.wordArray = [];
         this.typedChars = 0;
-        this.dx = 0.5;
+        this.dx = 1.7;
         this.score = 0;
         this.lives = 10;
         this.spawnrate = -1000;
@@ -34,8 +34,14 @@ class Game {
 
         setInterval( () => {
             // this.dx += .2,
-            this.spawnrate += 750;
-        },15000)
+            if (this.spawnrate < 1200)
+            this.spawnrate += 400;
+        },20000)
+
+        setInterval( () => {
+            this.dx += .2;
+            // this.spawnrate += 500;
+        },10000)
 
 
     
@@ -81,7 +87,7 @@ class Game {
         if (this.wordsDisplayed){
             this.time += 0.5;
 
-            this.wpm = 1.5*(this.typedChars/5) / (this.time/60);
+            this.wpm = (this.typedChars/5) / (this.time/60);
         }
         else {
             return null;
@@ -93,11 +99,15 @@ class Game {
 
     draw(){
         this.frameRate += 1;
-        this.ctx.fillText('Score: ' + this.score, this.canvas.width - 60, 30);
-        this.ctx.fillText('lives ' + this.lives, this.canvas.width - 60, 60);
-        this.ctx.fillText('Time ' + this.time, this.canvas.width - 100, 90);
-        this.ctx.fillText('WPM ' + this.wpm, this.canvas.width - 100, 120);
-        this.ctx.fillText('wordsDisplayed ' + this.wordsDisplayed, this.canvas.width - 150, 150);
+        this.ctx.fillStyle = '#FFFFFF';
+        this.ctx.font = '20px Frijole'
+        this.ctx.fillText('Score: ' + this.score, 60, this.canvas.height -  60);
+        this.ctx.fillText('lives ' + this.lives, this.canvas.width - 120,30);
+        this.ctx.fillText('WPM ' + this.wpm.toFixed(2), this.canvas.width - 170,this.canvas.height -  60);
+        this.ctx.fillText('spawn ' + this.spawnrate, this.canvas.width - 200,60);
+        this.ctx.fillText('speed ' + this.dx, this.canvas.width - 150,90);
+        // this.ctx.fillText('ARRAYLENGTH ' + this.wordArray.length, this.canvas.width - 250,120);
+
 
 
 
@@ -117,8 +127,20 @@ class Game {
         requestAnimationFrame(this.playGame);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        var gradient = this.ctx.createLinearGradient(0,this.canvas.height - 120 ,0, this.canvas.height - 90);
+        gradient.addColorStop(0, "rgba(0, 0, 0, 0.5)");
+        gradient.addColorStop(1, "rgba(0, 0, 0, 1.0)");
+        this.ctx.fillStyle = gradient;
+        this.ctx.fillRect(0, this.canvas.height, this.canvas.width, -120)
+
+        // var gradient = this.ctx.createLinearGradient(0,this.canvas.height - 120 ,0, this.canvas.height - 90);
+        // gradient.addColorStop(0, "rgba(0, 0, 0, 0.5)");
+        // gradient.addColorStop(1, "rgba(0, 0, 0, 1.0)");
+        // this.ctx.fillStyle = gradient;
+        // this.ctx.fillRect(0, this.canvas.height, this.canvas.width, -120)
+
+
         this.wordsDisplayed = this.wordArray.length ? true : false; 
-        
         if (this.lives > 0){
             // this.timer();
             this.draw();
