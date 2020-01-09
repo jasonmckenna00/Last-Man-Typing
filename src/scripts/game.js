@@ -12,6 +12,7 @@ earth3.src = '../../dist/assets/earth3.png';
 
 class Game {
     constructor(canvas, ctx){
+        
         this.canvas = canvas;
         this.ctx = ctx;
         this.alienArray = [];
@@ -19,13 +20,13 @@ class Game {
         this.typedChars = 0;
         this.dx = 1.7;
         this.score = 0;
-        this.lives = 10;
+        this.lives = 1;
         this.spawnrate = -1000;
         this.time = 1;
         this.wpm = 0;
         this.wordsDisplayed = false;
         this.frameRate = 0;
-
+        this.timerOn = true;
 
         this.draw = this.draw.bind(this);
         this.playGame = this.playGame.bind(this);
@@ -42,14 +43,12 @@ class Game {
         },500)
 
         setInterval( () => {
-            // this.dx += .2,
             if (this.spawnrate < 1200)
             this.spawnrate += 400;
         },20000)
 
         setInterval( () => {
             this.dx += .2;
-            // this.spawnrate += 500;
         },10000)
 
 
@@ -93,7 +92,7 @@ class Game {
 
     
     timer(){
-        if (this.wordsDisplayed){
+        if (this.wordsDisplayed && this.timerOn){
             this.time += 0.5;
 
             this.wpm = (this.typedChars/5) / (this.time/60);
@@ -145,13 +144,20 @@ class Game {
         requestAnimationFrame(this.playGame);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.borderGradients();
-        
+
+        const userInput = document.getElementById('userInput');
+    
+        this.canvas.addEventListener('click', () => {
+            // debugger
+            userInput.focus();
+        });
 
 
         this.wordsDisplayed = this.wordArray.length ? true : false; 
         if (this.lives > 0){
             this.draw();
         } else {
+            this.timerOn = false;
             this.losingScreen();
             document.addEventListener("keydown", this.restartgame, false);
             
@@ -167,14 +173,32 @@ class Game {
         this.lives = 10;
         this.spawnrate = 0;
         this.time = 0;
-        // this.wpm = 0;
         this.typedChars = 0;
-        clearInterval(this.timer())
+        const form = document.getElementById('getUserInput');
+        form.style.display = 'flex'
+        clearInterval(this.timer());
+        this.timerOn = true;
         document.removeEventListener('keydown',this.restartgame,false)
     }
 
     losingScreen(){
-        this.ctx.fillText('Press r to restart', 30, 30)
+        const form = document.getElementById('getUserInput');
+        form.style.display = 'none'
+        const w = 550;
+        const h = 300;
+        this.ctx.font = '30px Frijole';
+        this.ctx.fillStyle = "#c9c9c9";
+        this.ctx.fillRect( this.canvas.width/2 - w/2, this.canvas.height/2 - h/2, w, h);
+        this.ctx.fillStyle = '#000000';
+        this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 150);
+        this.ctx.font = '20px Frijole';
+        this.ctx.fillText('Your Stats',this.canvas.width/2 - 80, this.canvas.height/2);
+        this.ctx.fillText('Score: ' + this.score,this.canvas.width/2 - 80, this.canvas.height/2 + 30);
+        this.ctx.fillText('WPM: '+ this.wpm.toFixed(2),this.canvas.width/2 - 80, this.canvas.height/2 + 60);
+
+        // this.ctx.fillRect( this.canvas.width/2 - w/2 + 15 , this.canvas.height/2, 150, 1);
+        
+        this.ctx.fillText('Press r to restart', 30, 30);
     }
 
     borderGradients(){

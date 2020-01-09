@@ -12,6 +12,10 @@ font-family: 'Frijole', cursive; */
     100% { transform: scale(1); }
 }
 
+@font-face {
+    font-family: 'MaroonedOnMarsBB';
+    src: url('../../dist/fonts/MaroonedOnMarsBB.ttf')
+}
 
 html{
     height: 100%;
@@ -32,12 +36,13 @@ body{
 }
 canvas {
     margin-top: 0;
+    position: relative;
 }
 
 #getUserInput{
     display: flex;
     position: absolute;
-    transform: translate(0px, 185px);
+    transform: translate(0px, 250px);
     width: 380px;
     height: 50px;
     outline: none;
@@ -46,21 +51,34 @@ canvas {
 
 #userInput{
     width: 100%;
-    background-color: black;
+    background: transparent;
     outline: none;
     border: none;
     color: white;
     font-size: 40px;
     text-align: center;
     font-family: 'Frijole', cursive;
+    caret-color: transparent;
 }
+
+#userInput:focus{
+    outline: none;
+
+}
+
+#userInput:hover{
+    cursor: none;
+}
+
+
 
 .title-text{
     color: white;
     margin-top: 185px;
-    font-family: 'Press Start 2P';
-    font-size: 25px;
+    font-family: 'Frijole', cursive;
+    font-size: 45px;
     display: inline-block;
+
 
 }
 
@@ -70,4 +88,5 @@ canvas {
     transform-origin:70% 70%;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+    
 }

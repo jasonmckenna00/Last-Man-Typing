@@ -34,13 +34,7 @@ class Alien{
 
         frame = this.frames[this.currentFrame % max];
 
-        // this.ctx.fillStyle = '#FFFFFF';
-        // const scale = .20;
-        // const width = 232;
-        // const height = 385;
-        // const scaledW = scale * width;
-        // const scaledH = scale * height;
-        // this.ctx.drawImage(img, frame, 0, width, height,this.AlienPos, this.rndPos, scaledW, scaledH);
+ 
 
         this.ctx.fillStyle = '#FFFFFF';
         const scale = 1;
@@ -51,12 +45,12 @@ class Alien{
         this.ctx.drawImage(img, frame, 0, width, height,this.AlienPos, this.rndPos, scaledW, scaledH);
 
 
-        this.ctx.font = '25px Roboto';
+        this.ctx.font = '15px Frijole';
         this.ctx.shadowBlur = 4;
         this.ctx.fillText(this.word, 25 + this.AlienPos, this.rndPos + 15);
     }
 
-    update(count){
+    update(){
         this.AlienPos += this.dx;
         if (this.AlienPos >= this.canvas.width){
             this.rendered = 0;
@@ -67,11 +61,6 @@ class Alien{
             this.draw();
         }
     }
-
-    // help(){
-    //     var frame;
-    //     if(this.)
-    // }
 
 }
 
