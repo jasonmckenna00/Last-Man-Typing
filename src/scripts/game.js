@@ -1,4 +1,13 @@
 import Alien from './aliens'
+var earth0 = new Image();
+var earth1 = new Image();
+var earth2 = new Image();
+var earth3 = new Image();
+
+earth0.src = '../../dist/assets/earth0.png';
+earth1.src = '../../dist/assets/earth1.png';
+earth2.src = '../../dist/assets/earth2.png';
+earth3.src = '../../dist/assets/earth3.png';
 
 
 class Game {
@@ -104,11 +113,20 @@ class Game {
         this.ctx.fillText('Score: ' + this.score, 60, this.canvas.height -  60);
         this.ctx.fillText('lives ' + this.lives, this.canvas.width - 120,30);
         this.ctx.fillText('WPM ' + this.wpm.toFixed(2), this.canvas.width - 170,this.canvas.height -  60);
-        this.ctx.fillText('spawn ' + this.spawnrate, this.canvas.width - 200,60);
-        this.ctx.fillText('speed ' + this.dx, this.canvas.width - 150,90);
-        // this.ctx.fillText('ARRAYLENGTH ' + this.wordArray.length, this.canvas.width - 250,120);
+        // this.ctx.fillText('speed ' + this.dx, this.canvas.width - 150,90);
 
+        let earth;
+        if (this.lives > 7){
+            earth = earth0;
+        } else if (this.lives <= 7 && this.lives > 4){
+            earth = earth1;
+        } else if (this.lives <= 4 && this.lives > 1){
+            earth = earth2;
+        } else if (this.lives === 1){
+            earth = earth3;
+        }
 
+        this.ctx.drawImage(earth, this.canvas.width - 100, this.canvas.height/2 - 90,200,200)
 
 
         for (let i = 0; i < this.alienArray.length; i++){
@@ -126,23 +144,12 @@ class Game {
     playGame(){
         requestAnimationFrame(this.playGame);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        var gradient = this.ctx.createLinearGradient(0,this.canvas.height - 120 ,0, this.canvas.height - 90);
-        gradient.addColorStop(0, "rgba(0, 0, 0, 0.5)");
-        gradient.addColorStop(1, "rgba(0, 0, 0, 1.0)");
-        this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(0, this.canvas.height, this.canvas.width, -120)
-
-        // var gradient = this.ctx.createLinearGradient(0,this.canvas.height - 120 ,0, this.canvas.height - 90);
-        // gradient.addColorStop(0, "rgba(0, 0, 0, 0.5)");
-        // gradient.addColorStop(1, "rgba(0, 0, 0, 1.0)");
-        // this.ctx.fillStyle = gradient;
-        // this.ctx.fillRect(0, this.canvas.height, this.canvas.width, -120)
+        this.borderGradients();
+        
 
 
         this.wordsDisplayed = this.wordArray.length ? true : false; 
         if (this.lives > 0){
-            // this.timer();
             this.draw();
         } else {
             this.losingScreen();
@@ -168,6 +175,22 @@ class Game {
 
     losingScreen(){
         this.ctx.fillText('Press r to restart', 30, 30)
+    }
+
+    borderGradients(){
+        var gradient = this.ctx.createLinearGradient(0,this.canvas.height - 120 ,0, this.canvas.height - 90);
+        gradient.addColorStop(0, "rgba(0, 0, 0, 0.5)");
+        gradient.addColorStop(1, "rgba(0, 0, 0, 1.0)");
+        this.ctx.fillStyle = gradient;
+        this.ctx.fillRect(0, this.canvas.height, this.canvas.width, -120)
+
+        var gradient1 = this.ctx.createLinearGradient(0,230 ,0, 0);
+        gradient1.addColorStop(0, "rgba(0, 0, 0, 0.1)");
+        gradient1.addColorStop(0.5, "rgba(0, 0, 0, 0.5)");
+        gradient1.addColorStop(0.75, "rgba(0, 0, 0, 0.8)");
+        gradient1.addColorStop(1, "rgba(0, 0, 0, 1.0)");
+        this.ctx.fillStyle = gradient1;
+        this.ctx.fillRect(0, 0, this.canvas.width, 120)
     }
 }
 
