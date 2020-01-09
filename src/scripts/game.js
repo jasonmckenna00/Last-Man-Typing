@@ -11,11 +11,11 @@ class Game {
         this.dx = 0.5;
         this.score = 0;
         this.lives = 10;
-        this.spawnrate = -2000;
+        this.spawnrate = -1000;
         this.time = 1;
-        // this.mins = this.time / 60;
         this.wpm = 0;
         this.wordsDisplayed = false;
+        this.frameRate = 0;
 
 
         this.draw = this.draw.bind(this);
@@ -30,11 +30,11 @@ class Game {
 
         setInterval( () => {
             this.timer()
-        },1000)
+        },500)
 
         setInterval( () => {
             // this.dx += .2,
-            this.spawnrate += 500;
+            this.spawnrate += 750;
         },15000)
 
 
@@ -59,6 +59,7 @@ class Game {
 
 
 
+
     checkWord(word){
         let i = this.wordArray.indexOf(word);
         this.typedChars += word.length;
@@ -78,7 +79,7 @@ class Game {
     
     timer(){
         if (this.wordsDisplayed){
-            this.time += 1;
+            this.time += 0.5;
 
             this.wpm = 1.5*(this.typedChars/5) / (this.time/60);
         }
@@ -91,6 +92,7 @@ class Game {
 
 
     draw(){
+        this.frameRate += 1;
         this.ctx.fillText('Score: ' + this.score, this.canvas.width - 60, 30);
         this.ctx.fillText('lives ' + this.lives, this.canvas.width - 60, 60);
         this.ctx.fillText('Time ' + this.time, this.canvas.width - 100, 90);
@@ -101,7 +103,7 @@ class Game {
 
         for (let i = 0; i < this.alienArray.length; i++){
             if (this.alienArray[i].rendered){
-                this.alienArray[i].update();
+                this.alienArray[i].update(this.frameRate);
             } 
             else {
                 this.lives -= 1;
