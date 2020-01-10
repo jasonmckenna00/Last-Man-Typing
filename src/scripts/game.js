@@ -20,13 +20,14 @@ class Game {
         this.typedChars = 0;
         this.dx = 1.7;
         this.score = 0;
-        this.lives = 1;
+        this.lives = 10;
         this.spawnrate = -1000;
         this.time = 1;
         this.wpm = 0;
         this.wordsDisplayed = false;
         this.frameRate = 0;
         this.timerOn = true;
+        this.onScreen = true;
 
         this.draw = this.draw.bind(this);
         this.playGame = this.playGame.bind(this);
@@ -35,26 +36,35 @@ class Game {
         this.checkWord = this.checkWord.bind(this);
         this.restartgame = this.restartgame.bind(this);
         this.timer = this.timer.bind(this)
+        this.newHighScoreModal = this.newHighScoreModal.bind(this)
+
         this.generateAliens()
-        // this.timer();
-
-        setInterval( () => {
-            this.timer()
-        },500)
-
-        setInterval( () => {
-            if (this.spawnrate < 1200)
-            this.spawnrate += 400;
-        },20000)
-
-        setInterval( () => {
-            this.dx += .2;
-        },10000)
+        this.gameIntervals()
 
 
     
 
     }
+
+    gameIntervals(){
+        if (this.onScreen){
+            setInterval( () => {
+                this.timer()
+            },500)
+    
+            setInterval( () => {
+                if (this.spawnrate < 1000) this.spawnrate += 400;
+                
+            },20000)
+    
+            setInterval( () => {
+                this.dx += .2;
+            },10000)
+        }
+    }
+
+
+
 
     createAlien(ctx,canvas,dx){
         let alien = new Alien(ctx,canvas,dx);
@@ -64,11 +74,12 @@ class Game {
 
     generateAliens(){
         let delay = Math.floor(Math.random() * 5000);
-
-        setTimeout(()=>{
-            this.createAlien(this.ctx,this.canvas, this.dx);
-            this.generateAliens();
-        },delay - this.spawnrate)
+        if (this.onScreen){
+            setTimeout(()=>{
+                this.createAlien(this.ctx,this.canvas, this.dx);
+                this.generateAliens();
+            },delay - this.spawnrate)
+        }
     }
 
 
@@ -84,10 +95,6 @@ class Game {
             this.wordsDisplayed = this.wordArray.length ? true : false; 
             
         }
-    }
-
-    wordPerMinute(word){
-        this.wpm = (word.length / 5) / this.mins;
     }
 
     
@@ -112,7 +119,7 @@ class Game {
         this.ctx.fillText('Score: ' + this.score, 60, this.canvas.height -  60);
         this.ctx.fillText('lives ' + this.lives, this.canvas.width - 120,30);
         this.ctx.fillText('WPM ' + this.wpm.toFixed(2), this.canvas.width - 170,this.canvas.height -  60);
-        // this.ctx.fillText('speed ' + this.dx, this.canvas.width - 150,90);
+        this.ctx.fillText('speed ' + this.spawnrate, this.canvas.width - 180,90);
 
         let earth;
         if (this.lives > 7){
@@ -145,12 +152,17 @@ class Game {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.borderGradients();
 
+        
+        window.onblur = () => this.onScreen = false;
+        window.onfocus = () => {
+            this.onScreen = true;
+            this.gameIntervals();
+            this.generateAliens();
+        }
+        
+        
         const userInput = document.getElementById('userInput');
-    
-        this.canvas.addEventListener('click', () => {
-            // debugger
-            userInput.focus();
-        });
+        this.canvas.addEventListener('click', () => userInput.focus());
 
 
         this.wordsDisplayed = this.wordArray.length ? true : false; 
@@ -187,18 +199,61 @@ class Game {
         const w = 550;
         const h = 300;
         this.ctx.font = '30px Frijole';
-        this.ctx.fillStyle = "#c9c9c9";
-        this.ctx.fillRect( this.canvas.width/2 - w/2, this.canvas.height/2 - h/2, w, h);
-        this.ctx.fillStyle = '#000000';
-        this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 150);
-        this.ctx.font = '20px Frijole';
-        this.ctx.fillText('Your Stats',this.canvas.width/2 - 80, this.canvas.height/2);
-        this.ctx.fillText('Score: ' + this.score,this.canvas.width/2 - 80, this.canvas.height/2 + 30);
-        this.ctx.fillText('WPM: '+ this.wpm.toFixed(2),this.canvas.width/2 - 80, this.canvas.height/2 + 60);
+        // this.ctx.fillStyle = "be9fe1";
+        // this.ctx.fillRect( this.canvas.width/2 - w/2, this.canvas.height/2 - h/2, w, h);
+        this.ctx.fillStyle = '#d89cf6';
 
-        // this.ctx.fillRect( this.canvas.width/2 - w/2 + 15 , this.canvas.height/2, 150, 1);
+     
+            // this.newHighScoreModal()
         
-        this.ctx.fillText('Press r to restart', 30, 30);
+
+            this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 90);
+        
+        this.ctx.font = '23px Frijole';
+        this.ctx.fillText('Your Stats',this.canvas.width/2 - 80, 130);
+        this.ctx.fillText('Score: ' + this.score,this.canvas.width/2 - 80, 160);
+        this.ctx.fillText('WPM: '+ this.wpm.toFixed(2),this.canvas.width/2 - 80, 190);
+
+
+
+        this.ctx.font = '20px Frijole';
+        this.ctx.fillText('Press r to restart', this.canvas.width/2 - 130, this.canvas.height/2 + 210);
+    }
+
+    newHighScoreModal(){
+        this.ctx.font = '30px Frijole';
+        this.ctx.fillStyle = '#d89cf6';
+        this.ctx.fillText('New High Score!', this.canvas.width/2-175, 90);
+
+        this.ctx.font = '20px Frijole';
+        this.ctx.fillText('Join the Leaderboard!' + this.score,this.canvas.width/2 - 160,this.canvas.height/2 + 90);
+
+
+        
+
+
+
+
+
+        const newForm = document.createElement('form');
+        const newInput = document.createElement('input');
+        newInput.setAttribute('type', 'text');
+        newInput.setAttribute('value', '')
+        newInput.autofocus = true;
+        newForm.appendChild(newInput)
+        newForm.addEventListener('submit', handleSubmit );
+
+
+        function handleSubmit(e){
+            e.preventDefault();
+            game.addHighScore(newInput.value);
+            newForm.reset();
+        }
+
+    }
+
+    addHighScore(word){
+        if (word.trim()) console.log('worked')
     }
 
     borderGradients(){
