@@ -252,7 +252,7 @@ class Game {
         newInput.autofocus = true;
         newForm.appendChild(newInput)
         newForm.addEventListener('submit', handleSubmit );
-
+        this.canvas.appendChild(newForm)
 
         function handleSubmit(e){
             e.preventDefault();

@@ -43,10 +43,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fireBaseAPI.getScores().then( query => {
         const scores = query.docs;
-        scores.forEach(score => {
+        scores.forEach(entry => {
+            const {name, score, wpm} = entry.data();
             let newLi = document.createElement('li');
+            let newName = document.createElement('h3')
+            let newScore = document.createElement('h3')
+            let newWPM = document.createElement('h3')
+            newName.innerHTML= name;
+            newScore.innerHTML= score;
+            newWPM.innerHTML= wpm;
+
+            newLi.appendChild(newName);
+            newLi.appendChild(newScore);
+            newLi.appendChild(newWPM);
+            // 
+
+
+
+
             newLi.setAttribute('class', 'leaderboard-stat-single');
-            newLi.innerText = score.data().name + score.data().score + score.data().wpm;
+            // newLi.innerText = score.data().name + score.data().score + score.data().wpm;
             leaderBoard.appendChild(newLi)
         })
         
