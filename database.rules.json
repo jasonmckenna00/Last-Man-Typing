@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "scores":{
+      "$score_id": {
+        ".read": true,
+        ".validate": "newData.hasChildren(['name','score','wpm']) && newData.child('name').isString() && newData.child('score').isNumber() && newData.child('wpm').isNumber()",
+        ".write": "newData.hasChildren(['name','score','wpm'])"
+        
+      }
+    }
+  }
+}

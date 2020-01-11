@@ -14,7 +14,8 @@
     </style>
     <link rel="stylesheet" href="./src/styles/index.css">
     <link href="https://fonts.googleapis.com/css?family=Frijole|Press+Start+2P&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
 
 
 </head>
@@ -26,15 +27,31 @@
             
         <h2 class= 'title-text pulse'>LAST MAN TYPING</h2>
         <canvas></canvas>
+
+        <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyAGetA6clpEpTwNteoE_jof2bC_GxI7rzI",
+                authDomain: "last-man-typing.firebaseapp.com",
+                databaseURL: "https://last-man-typing.firebaseio.com",
+                projectId: "last-man-typing",
+                storageBucket: "last-man-typing.appspot.com",
+                messagingSenderId: "66500379215",
+                appId: "1:66500379215:web:407b8826ade7690e88e03a"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+        </script>
+
         <script src="./dist/main.js"></script>
 
         <form id="getUserInput">
             <input id='userInput' type="text" value=''>
-            <!-- <button type="submit"></button> -->
         </form>
 
         <div class='leaderboard-container'>
                 <h2> LEADER BOARD</h2>
+                <ol id='leaderboard-stats'></ol>
         </div>
     </div>
 

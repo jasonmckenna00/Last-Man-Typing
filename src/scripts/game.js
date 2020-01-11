@@ -1,4 +1,7 @@
-import Alien from './aliens'
+import Alien from './aliens';
+// import * as fireBaseAPI from './firebasedb';
+
+
 var earth0 = new Image();
 var earth1 = new Image();
 var earth2 = new Image();
@@ -8,6 +11,9 @@ earth0.src = '../../dist/assets/earth0.png';
 earth1.src = '../../dist/assets/earth1.png';
 earth2.src = '../../dist/assets/earth2.png';
 earth3.src = '../../dist/assets/earth3.png';
+
+
+// debugger
 
 
 class Game {
@@ -38,10 +44,11 @@ class Game {
         this.timer = this.timer.bind(this)
         this.newHighScoreModal = this.newHighScoreModal.bind(this)
 
-        this.generateAliens()
-        this.gameIntervals()
-
-
+        this.generateAliens();
+        this.gameIntervals();
+        // debugger
+        // fireBaseAPI.getScores()
+        //     .then( () => console.log(this.leaderBoard));
     
 
     }
@@ -194,8 +201,9 @@ class Game {
     }
 
     losingScreen(){
+        // const highScore = fireBase.checkScore(this.score);
         const form = document.getElementById('getUserInput');
-        form.style.display = 'none'
+        form.style.display = 'none';
         const w = 550;
         const h = 300;
         this.ctx.font = '30px Frijole';
@@ -204,10 +212,12 @@ class Game {
         this.ctx.fillStyle = '#d89cf6';
 
      
-            // this.newHighScoreModal()
-        
+        // if (highScore){
+        //     this.newHighScoreModal()
+        // } else {
+        //     this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 90);
+        // }
 
-            this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 90);
         
         this.ctx.font = '23px Frijole';
         this.ctx.fillText('Your Stats',this.canvas.width/2 - 80, 130);
