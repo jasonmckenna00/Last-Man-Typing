@@ -1,6 +1,6 @@
 # Last Man Typing
 ## Background 
-LMT is a typing game where aliens are trying attack a town as one man tries to defend it. Each alien will have a word over their head and the shooter (the player) has to type out the words before they reach the town. There will occassionally be special aliens which when destroyed, the shooter will get fortifications to add health to the base. If too many aliens get through, the town will be destroyed and the game will end. 
+LMT is a typing game where aliens are trying to invade Earth and you have to defend it. Each alien spaceship will have a word floating above and the player has to type out the words before they reach the planet. As the game progresses, spaceships will move at a faster rate, and begin spawning quicker and quicker. If too many aliens get through, the town will be destroyed and the game will end. 
 
 As the game progresses, aliens with larger words will start to spawn and will do so at a quicker rate. Additional information and features will be mapped out in the **Functionality & MVP** and **Features** sections.
 
@@ -9,25 +9,25 @@ As the game progresses, aliens with larger words will start to spawn and will do
 - [ ] Objects will spawn on one side of the screen with a word associated with it
 - [ ] Typing out words in anyorder will remove object from play
 - [ ] WPM counter will be seen with live updates
-- [ ] When screen is populated with overlapping words, an array will appear to distinguish each word
-
-_BONUS_
 - [ ] The game will have a unique skin 
+
+_BONUS
 - [ ] Special aliens will have drops/bonuses when destroyed
 - [ ] Mini-bosses will appear if the player survives long enough
 - [ ] Multiple skins/themes will be available for player's preference
-- [ ] Player has tracking of the word it typed and its position on the screen
+
 
 
 ## Wireframes
 
-This app will consist of a single screen with all the animations happening in a playbox. Nav links for my LinkedIn, Github, and Angel list will be featured at the top of page above the title. Within the playbox, the player's object will be on the right side of the screen with the alien objects spawning on the left. There will be barricades towards the center of the screen which will give the player some delay to type out the words. Additionally, any bonus features will available at the bottom of the play box with themes available underneath.
+This app will consist of a single screen with all the animations happening in a playbox. Nav links for my LinkedIn, Github, and Angel list will be featured at the top of page above the title. Within the playbox, the spaceships will spawn on the left side and move toward the right side of the screen. The player can see their word typed out at the bottom of the play screen with their score in the top right corner. Additionally, any bonus features will available at the bottom of the play box with themes available underneath.
 
 ## Architecture and Technologies
 
 This project will be implemented in the following technologies:
 - `Javascript` for game logic
-- `NOT 100% sure which to use for rendering effects`
+- `Canvas` will be used for the playbox and animations
+- `Firestore` will be used to host and store leader board information
 
 
 ## Implementation Timeline
