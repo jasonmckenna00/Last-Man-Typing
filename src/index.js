@@ -8,14 +8,7 @@ import addScore from './scripts/firebasedb';
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    // const scores = fireBaseAPI.getScores;
-    // fireBaseAPI.getScores().then( scores => {
-    //     debugger
-    //     console.log(scores)
-    // });
 
-
-    // debugger
     const canvas = document.getElementsByTagName("canvas")[0];
     canvas.width = 800;
     canvas.height = 480;
@@ -36,44 +29,27 @@ document.addEventListener("DOMContentLoaded", function () {
         userForm.reset();
     }
     
-//    const score = addScore;
     const leaderBoard = document.getElementById('leaderboard-stats');
-    // const scores = fireBaseAPI.getScores;
-    // const test = scores()
 
     fireBaseAPI.getScores().then( query => {
         const scores = query.docs;
         scores.forEach(entry => {
             const {name, score, wpm} = entry.data();
             let newLi = document.createElement('li');
-            let newName = document.createElement('h3')
-            let newScore = document.createElement('h3')
-            let newWPM = document.createElement('h3')
-            newName.innerHTML= name;
+            let newName = document.createElement('h3');
+            let newScore = document.createElement('h3');
+            let newWPM = document.createElement('h3');
+            newName.innerHTML= name.slice(0,3);
             newScore.innerHTML= score;
             newWPM.innerHTML= wpm;
-
             newLi.appendChild(newName);
             newLi.appendChild(newScore);
-            newLi.appendChild(newWPM);
-            // 
-
-
-
-
+            newLi.appendChild(newWPM);           
             newLi.setAttribute('class', 'leaderboard-stat-single');
-            // newLi.innerText = score.data().name + score.data().score + score.data().wpm;
             leaderBoard.appendChild(newLi)
         })
         
     });
-    //  
-    //     .then( (scores) => {
-    //         console.log(scores)
-    //     })
-    // debugger
-    // 
-
 
 
 

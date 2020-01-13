@@ -148,3 +148,6 @@ canvas {
     display: flex;
     transform: translate(0, -40px);
 }
+.leaderboard-stat-single h3{
+    width: 50px;
+}

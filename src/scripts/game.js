@@ -1,5 +1,5 @@
 import Alien from './aliens';
-// import * as fireBaseAPI from './firebasedb';
+import * as fireBaseAPI from './firebasedb';
 
 
 var earth0 = new Image();
@@ -46,27 +46,21 @@ class Game {
 
         this.generateAliens();
         this.gameIntervals();
-        // debugger
-        // fireBaseAPI.getScores()
-        //     .then( () => console.log(this.leaderBoard));
-    
+
 
     }
 
     gameIntervals(){
         if (this.onScreen){
-            setInterval( () => {
-                this.timer()
-            },500)
+            setInterval( () =>  this.timer(),500)
+            setInterval( () => this.dx += .2,10000);   
+            
     
             setInterval( () => {
                 if (this.spawnrate < 1000) this.spawnrate += 400;
-                
             },20000)
-    
-            setInterval( () => {
-                this.dx += .2;
-            },10000)
+        } else {
+            clearInterval(timer)
         }
     }
 
@@ -108,7 +102,6 @@ class Game {
     timer(){
         if (this.wordsDisplayed && this.timerOn){
             this.time += 0.5;
-
             this.wpm = (this.typedChars/5) / (this.time/60);
         }
         else {
@@ -155,7 +148,7 @@ class Game {
     }
 
     playGame(){
-        requestAnimationFrame(this.playGame);
+        const animation = requestAnimationFrame(this.playGame);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.borderGradients();
 
@@ -177,46 +170,31 @@ class Game {
             this.draw();
         } else {
             this.timerOn = false;
+            cancelAnimationFrame(animation)
             this.losingScreen();
-            document.addEventListener("keydown", this.restartgame, false);
             
         }
     }
 
-    restartgame(e){
-        if (e.key != 'r') return;
-        this.alienArray = [];
-        this.wordArray = [];
-        this.dx = .5;
-        this.score = 0;
-        this.lives = 10;
-        this.spawnrate = 0;
-        this.time = 0;
-        this.typedChars = 0;
-        const form = document.getElementById('getUserInput');
-        form.style.display = 'flex'
-        clearInterval(this.timer());
-        this.timerOn = true;
-        document.removeEventListener('keydown',this.restartgame,false)
-    }
 
     losingScreen(){
-        // const highScore = fireBase.checkScore(this.score);
+        const highScore = fireBaseAPI.checkScore(this.score);
         const form = document.getElementById('getUserInput');
         form.style.display = 'none';
         const w = 550;
         const h = 300;
         this.ctx.font = '30px Frijole';
-        // this.ctx.fillStyle = "be9fe1";
-        // this.ctx.fillRect( this.canvas.width/2 - w/2, this.canvas.height/2 - h/2, w, h);
         this.ctx.fillStyle = '#d89cf6';
-
-     
+        // debugger
+        
         // if (highScore){
-        //     this.newHighScoreModal()
+        //     this.newHighScoreModal()    
         // } else {
         //     this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 90);
+                // document.addEventListener("keydown", this.restartgame, false);
+
         // }
+            this.newHighScoreModal()    
 
         
         this.ctx.font = '23px Frijole';
@@ -236,7 +214,7 @@ class Game {
         this.ctx.fillText('New High Score!', this.canvas.width/2-175, 90);
 
         this.ctx.font = '20px Frijole';
-        this.ctx.fillText('Join the Leaderboard!' + this.score,this.canvas.width/2 - 160,this.canvas.height/2 + 90);
+        this.ctx.fillText('Join the Leaderboard!',this.canvas.width/2 - 160,this.canvas.height/2 + 90);
 
 
         
@@ -244,6 +222,7 @@ class Game {
 
 
 
+        const leaderBoardEntry = document.getElementById('leaderboard-entry');
 
         const newForm = document.createElement('form');
         const newInput = document.createElement('input');
@@ -252,19 +231,45 @@ class Game {
         newInput.autofocus = true;
         newForm.appendChild(newInput)
         newForm.addEventListener('submit', handleSubmit );
-        this.canvas.appendChild(newForm)
+        leaderBoardEntry.appendChild(newForm)
+        const score = this.score;
+        const wpm = this.wpm
 
         function handleSubmit(e){
             e.preventDefault();
-            game.addHighScore(newInput.value);
-            newForm.reset();
+            
+            fireBaseAPI.addScore(newInput.value, score, wpm.toFixed(2)).then( () => {
+                while (leaderBoardEntry.firstChild) {
+                    leaderBoardEntry.removeChild(leaderBoardEntry.firstChild);
+                }
+                
+                document.addEventListener("keydown", this.restartgame, false);
+                // debugger
+            });
         }
 
     }
 
-    addHighScore(word){
-        if (word.trim()) console.log('worked')
+    restartgame(e){
+        debugger
+        if (e.key != 'r') return;
+        this.alienArray = [];
+        this.wordArray = [];
+        this.dx = .5;
+        this.score = 0;
+        this.lives = 10;
+        this.spawnrate = 0;
+        this.time = 0;
+        this.typedChars = 0;
+        const form = document.getElementById('getUserInput');
+        form.style.display = 'flex'
+        // clearInterval(this.timer());
+        this.timerOn = true;
+        requestAnimationFrame(this.playGame)
+
+        document.removeEventListener('keydown',this.restartgame,false)
     }
+
 
     borderGradients(){
         var gradient = this.ctx.createLinearGradient(0,this.canvas.height - 120 ,0, this.canvas.height - 90);

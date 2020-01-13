@@ -10,33 +10,43 @@ firebase.initializeApp({
 
 
 const db = firebase.firestore();
-var scores = [];
+const fetchedScores = db.collection('highscores')
+                        .orderBy('score', 'desc')
+                        .limit(10)
+                        .get()
+// const scoresArray = fetchedScores.then(snapshot => {
+//     return snapshot.docs.map(entry => {
+//         return entry.data().score
+//     })
+// })
+
+var scoresArray = []
 export function getScores(){
-    return db.collection('highscores')
-        .orderBy('score', 'desc')
-        .limit(10)
-        .get()
-        // .then(snapshot => {
-        // snapshot.docs.forEach( entry => {
-        //     scores.push(entry.data().score)
-        // })
-
-    // })
-
+    fetchedScores.then(snapshot => {
+        snapshot.docs.forEach( entry => {
+           scoresArray.push( entry.data().score)
+        })
+        
+    })
+    return fetchedScores
 }
 
 export function checkScore(score){
-    return scores.some(() => score);
+
+    let outcome = false;
+    scoresArray.forEach(highScore => {
+        if (score > highScore) outcome = true
+    })
+
+    return outcome
 }
 
 export function addScore(name, score, wpm){
-    db.collection('highscores').add({
+    return db.collection('highscores').add({
         name: name,
         score: score,
         wpm: wpm
     })
-    .then( () => true)
-    .catch( () => false)
 }
 
 // module.exports = { addScore, checkScore, getScores};
