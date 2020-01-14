@@ -29,7 +29,7 @@ body{
     /* flex-direction: column; */
     justify-content: center;
     position: relative;
-    background-image: url('/dist/assets/purple.png');
+    background-image: url('../../src/assets/purple.png');
     background-repeat: no-repeat;
     background-size: cover;
     

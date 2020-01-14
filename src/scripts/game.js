@@ -1,5 +1,10 @@
 import Alien from './aliens';
 import * as fireBaseAPI from './firebasedb';
+import earth0Picture from '../../src/assets/earth0.png';
+import earth1Picture from '../../src/assets/earth1.png';
+import earth2Picture from '../../src/assets/earth2.png';
+import earth3Picture from '../../src/assets/earth3.png';
+
 
 
 var earth0 = new Image();
@@ -7,10 +12,10 @@ var earth1 = new Image();
 var earth2 = new Image();
 var earth3 = new Image();
 
-earth0.src = '../../dist/assets/earth0.png';
-earth1.src = '../../dist/assets/earth1.png';
-earth2.src = '../../dist/assets/earth2.png';
-earth3.src = '../../dist/assets/earth3.png';
+earth0.src = earth0Picture;
+earth1.src = earth1Picture;
+earth2.src = earth2Picture;
+earth3.src = earth3Picture;
 
 
 // debugger
@@ -26,8 +31,8 @@ class Game {
         this.typedChars = 0;
         this.dx = 1.7;
         this.score = 0;
-        this.lives = 10;
-        this.spawnrate = -1000;
+        this.lives = 1;
+        this.spawnrate = 0;
         this.time = 1;
         this.wpm = 0;
         this.wordsDisplayed = false;
@@ -43,12 +48,15 @@ class Game {
         this.restartgame = this.restartgame.bind(this);
         this.timer = this.timer.bind(this)
         this.newHighScoreModal = this.newHighScoreModal.bind(this)
-
+        // this.loadEarth();
         this.generateAliens();
         this.gameIntervals();
 
+        document.addEventListener("keydown",this.restartgame, false);
 
     }
+
+
 
     gameIntervals(){
         if (this.onScreen){
@@ -170,6 +178,7 @@ class Game {
             this.draw();
         } else {
             this.timerOn = false;
+            
             cancelAnimationFrame(animation)
             this.losingScreen();
             
@@ -191,10 +200,10 @@ class Game {
         //     this.newHighScoreModal()    
         // } else {
         //     this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 90);
-                // document.addEventListener("keydown", this.restartgame, false);
-
+        //         document.addEventListener("keydown", this.restartgame, false);
+                    // this.gameOver = true;
         // }
-            this.newHighScoreModal()    
+            this.newHighScoreModal(this.restartgame)    
 
         
         this.ctx.font = '23px Frijole';
@@ -207,6 +216,28 @@ class Game {
         this.ctx.font = '20px Frijole';
         this.ctx.fillText('Press r to restart', this.canvas.width/2 - 130, this.canvas.height/2 + 210);
     }
+
+    restartgame(e){
+        if (this.gameOver && e.key === 'r') {
+            this.alienArray = [];
+            this.wordArray = [];
+            this.dx = .5;
+            this.score = 0;
+            this.lives = 10;
+            this.spawnrate = 0;
+            this.time = 0;
+            this.typedChars = 0;
+            const form = document.getElementById('getUserInput');
+            form.style.display = 'flex'
+            // clearInterval(this.timer());
+            this.timerOn = true;
+            requestAnimationFrame(this.playGame)
+        } else {
+            return
+        }
+
+    }
+
 
     newHighScoreModal(){
         this.ctx.font = '30px Frijole';
@@ -237,38 +268,19 @@ class Game {
 
         function handleSubmit(e){
             e.preventDefault();
-            
+
             fireBaseAPI.addScore(newInput.value, score, wpm.toFixed(2)).then( () => {
                 while (leaderBoardEntry.firstChild) {
                     leaderBoardEntry.removeChild(leaderBoardEntry.firstChild);
+                    this.gameOver = true;
                 }
                 
-                document.addEventListener("keydown", this.restartgame, false);
                 // debugger
             });
         }
 
     }
 
-    restartgame(e){
-        debugger
-        if (e.key != 'r') return;
-        this.alienArray = [];
-        this.wordArray = [];
-        this.dx = .5;
-        this.score = 0;
-        this.lives = 10;
-        this.spawnrate = 0;
-        this.time = 0;
-        this.typedChars = 0;
-        const form = document.getElementById('getUserInput');
-        form.style.display = 'flex'
-        // clearInterval(this.timer());
-        this.timerOn = true;
-        requestAnimationFrame(this.playGame)
-
-        document.removeEventListener('keydown',this.restartgame,false)
-    }
 
 
     borderGradients(){

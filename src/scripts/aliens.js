@@ -1,11 +1,11 @@
-import { inherits } from 'util';
-var img = new Image();
-// img.src = '../../dist/assets/spritesheet1.png';
-img.src = '../../dist/assets/2frameship.png';
-
+import shipSprite from '../../src/assets/shipsprite.png';
 
 var randomWords = require('random-words')
 
+
+
+var img = new Image;
+img.src = shipSprite;
 
 
 class Alien{
@@ -61,6 +61,14 @@ class Alien{
             this.draw();
         }
     }
+
+    // loadAlien(frame,width,height,scaledW,scaledH){
+    //     var img = new Image();
+    //     img.onload = this.ctx.drawImage(img, frame, 0, width, height,this.AlienPos, this.rndPos, scaledW, scaledH);
+    //     img.src = '../../dist/assets/2frameship.png';
+
+
+    // }
 
 }
 
