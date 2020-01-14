@@ -39,6 +39,7 @@ class Game {
         this.frameRate = 0;
         this.timerOn = true;
         this.onScreen = true;
+        this.gameOver = false;
 
         this.draw = this.draw.bind(this);
         this.playGame = this.playGame.bind(this);
@@ -196,15 +197,11 @@ class Game {
         this.ctx.fillStyle = '#d89cf6';
         // debugger
         
-        // if (highScore){
-        //     this.newHighScoreModal()    
-        // } else {
-        //     this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 90);
-        //         document.addEventListener("keydown", this.restartgame, false);
-                    // this.gameOver = true;
-        // }
-            this.newHighScoreModal(this.restartgame)    
-
+        if (highScore){
+            this.newHighScoreModal()    
+        } else {
+            this.ctx.fillText('Earth Was Destroyed!', this.canvas.width/2-215, 90);
+        }
         
         this.ctx.font = '23px Frijole';
         this.ctx.fillText('Your Stats',this.canvas.width/2 - 80, 130);
@@ -218,12 +215,13 @@ class Game {
     }
 
     restartgame(e){
-        if (this.gameOver && e.key === 'r') {
+        
+        if (e.key === 'r' && ctrlKey) {
             this.alienArray = [];
             this.wordArray = [];
-            this.dx = .5;
+            this.dx = 1.7;
             this.score = 0;
-            this.lives = 10;
+            this.lives = 1;
             this.spawnrate = 0;
             this.time = 0;
             this.typedChars = 0;
@@ -270,13 +268,13 @@ class Game {
             e.preventDefault();
 
             fireBaseAPI.addScore(newInput.value, score, wpm.toFixed(2)).then( () => {
+                
                 while (leaderBoardEntry.firstChild) {
                     leaderBoardEntry.removeChild(leaderBoardEntry.firstChild);
-                    this.gameOver = true;
                 }
-                
-                // debugger
+                debugger
             });
+            this.gameOver = true;
         }
 
     }
