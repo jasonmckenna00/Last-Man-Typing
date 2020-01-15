@@ -113,7 +113,7 @@ class Game {
     timer(){
         if (this.wordsDisplayed && this.timerOn){
             this.time += 0.5;
-            this.wpm = (this.typedChars/5) / (this.time/60);
+            this.wpm = 1.5*(this.typedChars/5) / (this.time/60);
         }
         else {
             return null;
@@ -228,7 +228,7 @@ class Game {
             this.typedChars = 0;
             const form = document.getElementById('getUserInput');
             form.style.display = 'flex';
-            
+
             // clearInterval(this.timer());
             this.timerOn = true;
             requestAnimationFrame(this.playGame)
