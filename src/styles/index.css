@@ -19,7 +19,8 @@ font-family: 'Frijole', cursive; */
 
 html{
     height: 100%;
-    /* overflow: hidden; */
+    overflow: hidden;
+
 }
 body{
     display: flex;
@@ -136,7 +137,7 @@ canvas {
     font-size: 15px;
     position: absolute;
     right: -280px;
-    top: 265px
+    /* top: 265px */
 }
 #leaderboard-stats{
     font-size: 15px;

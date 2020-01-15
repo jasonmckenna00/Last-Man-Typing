@@ -46,7 +46,7 @@ class Game {
         this.generateAliens = this.generateAliens.bind(this);
         this.createAlien = this.createAlien.bind(this);
         this.checkWord = this.checkWord.bind(this);
-        this.restartgame = this.restartgame.bind(this);
+        // this.restartgame = this.restartgame.bind(this);
         this.timer = this.timer.bind(this)
         this.newHighScoreModal = this.newHighScoreModal.bind(this)
         this.updateLeaderBoard = this.updateLeaderBoard.bind(this)
@@ -55,7 +55,7 @@ class Game {
         this.generateAliens();
         this.gameIntervals();
 
-        document.addEventListener("keydown",this.restartgame, false);
+        // document.addEventListener("keydown",this.restartgame, false);
 
     }
 
@@ -98,6 +98,7 @@ class Game {
 
 
     checkWord(word){
+        if (!this.timerOn || word.length > 15 || word.length < 2) return
         let i = this.wordArray.indexOf(word);
         this.typedChars += word.length;
         if (i != -1){
@@ -159,7 +160,10 @@ class Game {
     }
 
     playGame(){
-        const animation = requestAnimationFrame(this.playGame);
+        // if (this.gameOver){
+        //     return
+        // }
+        var animation = requestAnimationFrame(this.playGame);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.borderGradients();
 
@@ -216,27 +220,31 @@ class Game {
         this.ctx.fillText('Press Ctrl+Space to restart', this.canvas.width/2 - 190, this.canvas.height/2 + 210);
     }
 
-    restartgame(e){
-        if (e.code == 'Space' && (event.ctrlKey)) {
-            this.alienArray = [];
-            this.wordArray = [];
-            this.dx = 1.7;
-            this.score = 0;
-            this.lives = 10;
-            this.spawnrate = 0;
-            this.time = 0;
-            this.typedChars = 0;
-            const form = document.getElementById('getUserInput');
-            form.style.display = 'flex';
+    // restartgame(e){
+    //     if (e.code == 'Space' && (event.ctrlKey)) {
+    //         // this.alienArray = [];
+    //         // this.wordArray = [];
+    //         // this.dx = 1.7;
+    //         // this.score = 0;
+    //         // this.lives = 10;
+    //         // this.spawnrate = 0;
+    //         // this.time = 0;
+    //         // this.typedChars = 0;
+    //         // const form = document.getElementById('getUserInput');
+    //         // form.style.display = 'flex';
 
-            // clearInterval(this.timer());
-            this.timerOn = true;
-            requestAnimationFrame(this.playGame)
-        } else {
-            return
-        }
+    //         // // clearInterval(this.timer());
+    //         // this.timerOn = true;
+    //         // requestAnimationFrame(this.playGame)
+    //         // cancelAnimationFrame(animation)
+    //         // this.playGame()
+    //         const game = new Game(this.canvas, this.ctx);
+    //         game.playGame();
+    //     } else {
+    //         return
+    //     }
 
-    }
+    // }
 
 
     newHighScoreModal(){
@@ -268,7 +276,7 @@ class Game {
                     leaderBoardEntry.removeChild(leaderBoardEntry.firstChild);
                 }
                 this.updateLeaderBoard();
-                
+                // this.gameOver = true
             });
             
         }

@@ -46,7 +46,7 @@ class Alien{
         this.ctx.drawImage(img, frame, 0, width, height,this.AlienPos, this.rndPos + this.dy, scaledW, scaledH);
 
 
-        this.ctx.font = '18px Frijole';
+        this.ctx.font = '20px Montserrat';
         this.ctx.shadowBlur = 4;
         this.ctx.fillText(this.word, 25 + this.AlienPos, this.rndPos + 15 + this.dy);
     }
