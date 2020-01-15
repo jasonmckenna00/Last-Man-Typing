@@ -4,7 +4,7 @@ import earth0Picture from '../../src/assets/earth0.png';
 import earth1Picture from '../../src/assets/earth1.png';
 import earth2Picture from '../../src/assets/earth2.png';
 import earth3Picture from '../../src/assets/earth3.png';
-
+import {updateLeaderBoard} from '../index'
 
 
 var earth0 = new Image();
@@ -31,7 +31,7 @@ class Game {
         this.typedChars = 0;
         this.dx = 1.7;
         this.score = 0;
-        this.lives = 1;
+        this.lives = 10;
         this.spawnrate = 0;
         this.time = 1;
         this.wpm = 0;
@@ -49,7 +49,9 @@ class Game {
         this.restartgame = this.restartgame.bind(this);
         this.timer = this.timer.bind(this)
         this.newHighScoreModal = this.newHighScoreModal.bind(this)
+        this.updateLeaderBoard = this.updateLeaderBoard.bind(this)
         // this.loadEarth();
+        this.updateLeaderBoard();
         this.generateAliens();
         this.gameIntervals();
 
@@ -128,7 +130,7 @@ class Game {
         this.ctx.fillText('Score: ' + this.score, 60, this.canvas.height -  60);
         this.ctx.fillText('lives ' + this.lives, this.canvas.width - 120,30);
         this.ctx.fillText('WPM ' + this.wpm.toFixed(2), this.canvas.width - 170,this.canvas.height -  60);
-        this.ctx.fillText('speed ' + this.spawnrate, this.canvas.width - 180,90);
+        // this.ctx.fillText('speed ' + this.dx, this.canvas.width - 180,90);
 
         let earth;
         if (this.lives > 7){
@@ -211,22 +213,22 @@ class Game {
 
 
         this.ctx.font = '20px Frijole';
-        this.ctx.fillText('Press r to restart', this.canvas.width/2 - 130, this.canvas.height/2 + 210);
+        this.ctx.fillText('Press Ctrl+Space to restart', this.canvas.width/2 - 190, this.canvas.height/2 + 210);
     }
 
     restartgame(e){
-        
-        if (e.key === 'r' && ctrlKey) {
+        if (e.code == 'Space' && (event.ctrlKey)) {
             this.alienArray = [];
             this.wordArray = [];
             this.dx = 1.7;
             this.score = 0;
-            this.lives = 1;
+            this.lives = 10;
             this.spawnrate = 0;
             this.time = 0;
             this.typedChars = 0;
             const form = document.getElementById('getUserInput');
-            form.style.display = 'flex'
+            form.style.display = 'flex';
+            
             // clearInterval(this.timer());
             this.timerOn = true;
             requestAnimationFrame(this.playGame)
@@ -243,16 +245,9 @@ class Game {
         this.ctx.fillText('New High Score!', this.canvas.width/2-175, 90);
 
         this.ctx.font = '20px Frijole';
-        this.ctx.fillText('Join the Leaderboard!',this.canvas.width/2 - 160,this.canvas.height/2 + 90);
-
-
-        
-
-
-
+        this.ctx.fillText('Join the Leaderboard!',this.canvas.width/2 - 170,this.canvas.height/2 + 90);
 
         const leaderBoardEntry = document.getElementById('leaderboard-entry');
-
         const newForm = document.createElement('form');
         const newInput = document.createElement('input');
         newInput.setAttribute('type', 'text');
@@ -272,9 +267,10 @@ class Game {
                 while (leaderBoardEntry.firstChild) {
                     leaderBoardEntry.removeChild(leaderBoardEntry.firstChild);
                 }
-                debugger
+                this.updateLeaderBoard();
+                
             });
-            this.gameOver = true;
+            
         }
 
     }
@@ -295,6 +291,32 @@ class Game {
         gradient1.addColorStop(1, "rgba(0, 0, 0, 1.0)");
         this.ctx.fillStyle = gradient1;
         this.ctx.fillRect(0, 0, this.canvas.width, 120)
+    }
+
+
+    updateLeaderBoard(){
+        const leaderBoard = document.getElementById('leaderboard-stats');
+        while (leaderBoard.firstChild) {    
+            leaderBoard.removeChild(leaderBoard.firstChild);
+        }
+        fireBaseAPI.getScores().then( query => {
+            const scores = query.docs;
+            scores.forEach(entry => {
+                const {name, score, wpm} = entry.data();
+                let newLi = document.createElement('li');
+                let newName = document.createElement('h3');
+                let newScore = document.createElement('h3');
+                let newWPM = document.createElement('h3');
+                newName.innerHTML= name.slice(0,3);
+                newScore.innerHTML= score;
+                newWPM.innerHTML= wpm;
+                newLi.appendChild(newName);
+                newLi.appendChild(newScore);
+                newLi.appendChild(newWPM);           
+                newLi.setAttribute('class', 'leaderboard-stat-single');
+                leaderBoard.appendChild(newLi)
+            })
+        })
     }
 }
 

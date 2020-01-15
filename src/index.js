@@ -29,27 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         userForm.reset();
     }
     
-    const leaderBoard = document.getElementById('leaderboard-stats');
-
-    fireBaseAPI.getScores().then( query => {
-        const scores = query.docs;
-        scores.forEach(entry => {
-            const {name, score, wpm} = entry.data();
-            let newLi = document.createElement('li');
-            let newName = document.createElement('h3');
-            let newScore = document.createElement('h3');
-            let newWPM = document.createElement('h3');
-            newName.innerHTML= name.slice(0,3);
-            newScore.innerHTML= score;
-            newWPM.innerHTML= wpm;
-            newLi.appendChild(newName);
-            newLi.appendChild(newScore);
-            newLi.appendChild(newWPM);           
-            newLi.setAttribute('class', 'leaderboard-stat-single');
-            leaderBoard.appendChild(newLi)
-        })
-        
-    });
+   
 
 
 

@@ -24,6 +24,7 @@ class Alien{
         // this.frames = [0,this.frameWidth,2*this.frameWidth,3*this.frameWidth,4*this.frameWidth,5*this.frameWidth];
         this.frames = [0, 100];
         this.currentFrame = 0;
+        this.dy = 0
     }
 
     
@@ -42,12 +43,12 @@ class Alien{
         const height = 100;
         const scaledW = scale * width;
         const scaledH = scale * height;
-        this.ctx.drawImage(img, frame, 0, width, height,this.AlienPos, this.rndPos, scaledW, scaledH);
+        this.ctx.drawImage(img, frame, 0, width, height,this.AlienPos, this.rndPos + this.dy, scaledW, scaledH);
 
 
-        this.ctx.font = '15px Frijole';
+        this.ctx.font = '17px Frijole';
         this.ctx.shadowBlur = 4;
-        this.ctx.fillText(this.word, 25 + this.AlienPos, this.rndPos + 15);
+        this.ctx.fillText(this.word, 25 + this.AlienPos, this.rndPos + 15 + this.dy);
     }
 
     update(){
@@ -57,7 +58,17 @@ class Alien{
         } else {
             this._index += this.dx;
             this.currentFrame += 1;
-            // this.
+            // console.log(this.currentFrame)
+            const rng = Math.floor(Math.random() * (4) + 1);
+            if (rng === 1){
+                this.dy += 1;
+            } else if (rng ===2){
+                this.dy -= 1;
+            } else {
+                this.dy += 0;
+            }
+            
+            
             this.draw();
         }
     }
