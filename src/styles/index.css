@@ -6,9 +6,10 @@ font-family: 'Frijole', cursive; */
     30% { transform: scale(1); }
     40% { transform: scale(1.08); }
     50% { transform: scale(1); }
-    60% { transform: scale(1); }
-    70% { transform: scale(1.05); }
+    60% { transform: scale(1.05); }
+    70% { transform: scale(1); }
     80% { transform: scale(1); }
+    90% { transform: scale(1.08); }
     100% { transform: scale(1); }
 }
 
@@ -111,7 +112,7 @@ canvas {
 
 .pulse {
     animation-name: pulse_animation;
-    animation-duration: 10000ms;
+    animation-duration: 8000ms;
     transform-origin:70% 70%;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
@@ -119,15 +120,14 @@ canvas {
 }
 
 .splashpage{
-    background: url('../../src/assets/gameanimation2.gif');
-    background-repeat: no-repeat;
+    /* background: url('../../src/assets/gameanimation2.gif');
+    background-repeat: no-repeat; */
 
     height: 480px;
     width: 800px;
-    /* z-index: 2; */
     position: absolute;
     z-index: 2;
-    top: 287px;
+    top: 34%;
     display: flex;
 }
 
@@ -135,10 +135,11 @@ canvas {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    color: white;
+    color: #d89cf6;
     font-family: "Frijole", cursive;
-    font-size: 15px;
-
+    font-size: 19px;
+    justify-content: center;
+    text-align: center;
 }
 
 .leaderboard-container{

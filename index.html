@@ -11,6 +11,7 @@
              background: url('./src/assets/shootingstar.gif');
              border: 3px solid white;
              margin-bottom: 175px;
+             position: relative;
             }; 
     </style>
     <link rel="stylesheet" href="./src/styles/index.css">
@@ -37,13 +38,18 @@
         <h3 class="name-display">Created By: Jason McKenna</h3>
 
         <h2 class= 'title-text pulse'>LAST MAN TYPING</h2>
-        <!-- <div class='splashpage'>
+        <div class='splashpage' id='landing'>
             <div class="splashpage-topper">
-                <h2>Press Enter to Play</h2>
-                <h3>Just Start Typing</h3> -->
-            <!-- </div>             -->
+                <h1>Welcome to Last Man Typing!</h1>
+                <p>Spaceships will begin flying across the screen. Typing the word floating above each object will remove it from play. Type out as many words as you can before you run out of lives.</p>
+                <p>You may use the Spacebar or Enter key to submit a word</p>
+                <p>If you click off the screen and try to continue typing, please click on the game screen to refocus the input bar</p>
+                <br>
+                <br>
+                <h2 class="pulse">Press Enter to Play</h2>
+            </div>            
 
-        <!-- </div> --> 
+        </div> 
         <canvas></canvas>
 
         <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
@@ -76,8 +82,6 @@
                 </div>
                 
                 <ol id='leaderboard-stats'></ol>
-                
-                    
                 <div id='leaderboard-entry'></div>
         </div>
     </div>

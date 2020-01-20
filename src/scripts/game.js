@@ -40,6 +40,7 @@ class Game {
         this.timerOn = true;
         this.onScreen = true;
         this.gameOver = false;
+        this.startGame = false;
 
         this.draw = this.draw.bind(this);
         this.playGame = this.playGame.bind(this);
@@ -52,8 +53,8 @@ class Game {
         this.updateLeaderBoard = this.updateLeaderBoard.bind(this)
         // this.loadEarth();
         this.updateLeaderBoard();
-        this.generateAliens();
-        this.gameIntervals();
+        // this.generateAliens();
+        // this.gameIntervals();
 
         // document.addEventListener("keydown",this.restartgame, false);
 
@@ -160,9 +161,13 @@ class Game {
     }
 
     playGame(){
-        // if (this.gameOver){
-        //     return
-        // }
+        if (!this.startGame){
+            this.generateAliens();
+            this.gameIntervals();
+            this.startGame = true;
+            const userInput = document.getElementById('userInput');
+            userInput.autofocus = true;
+        }
         var animation = requestAnimationFrame(this.playGame);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.borderGradients();

@@ -35,8 +35,6 @@ class Alien{
 
         frame = this.frames[this.currentFrame % max];
 
- 
-
         this.ctx.fillStyle = '#FFFFFF';
         const scale = 1;
         const width = 100;
@@ -44,8 +42,6 @@ class Alien{
         const scaledW = scale * width;
         const scaledH = scale * height;
         this.ctx.drawImage(img, frame, 0, width, height,this.AlienPos, this.rndPos + this.dy, scaledW, scaledH);
-
-
         this.ctx.font = '20px Montserrat';
         this.ctx.shadowBlur = 4;
         this.ctx.fillText(this.word, 25 + this.AlienPos, this.rndPos + 15 + this.dy);
@@ -66,9 +62,7 @@ class Alien{
                 this.dy -= 1;
             } else {
                 this.dy += 0;
-            }
-            
-            
+            }   
             this.draw();
         }
     }

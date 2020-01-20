@@ -10,22 +10,35 @@ import addScore from './scripts/firebasedb';
 document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown",restartgame, false);
     document.addEventListener("keypress", handleSpace, false);
+    
     const canvas = document.getElementsByTagName("canvas")[0];
     canvas.width = 800;
     canvas.height = 480;
     const ctx = canvas.getContext("2d");
     const userInput = document.getElementById('userInput');
-    userInput.autofocus = true;
-    
-    
     var game = new Game(canvas, ctx);
-    game.playGame();
+    userInput.autofocus = true;
+
+    document.addEventListener("keypress", removeLandingPage);
+    function removeLandingPage(e){
+        if (e.key === 'Enter'){
+            const landing = document.getElementById('landing');
+            landing.style.display = 'none';
+            document.removeEventListener("keypress", removeLandingPage);
+            game.playGame();
+            userInput.focus();
+
+
+        }
+    }
+    
 
     
     const userForm = document.getElementById('getUserInput');
     userForm.addEventListener('submit',handleSubmit);
     function handleSubmit(e){
         e.preventDefault();
+        // debugger
         game.checkWord(userInput.value.toLowerCase().trim());
         userForm.reset();
     }
@@ -35,22 +48,20 @@ document.addEventListener("DOMContentLoaded", function () {
             handleSubmit(e);
         }
     }
+
+
     
    
 // const game = new Game(canvas, ctx);
 
-function restartgame(e){
-        if (e.code === 'Space' && (event.ctrlKey)) {
+    function restartgame(e){
+            if (e.code === 'Space' && (event.ctrlKey)) {
 
-            game = null;
-            const newGame = new Game(canvas, ctx);
-            newGame.playGame();
-        } 
-    }
+                game = null;
+                game = new Game(canvas, ctx);
+                game.playGame();
+                userInput.autofocus = true;
 
-
-
-
-    
-
+            } 
+        }
 });
