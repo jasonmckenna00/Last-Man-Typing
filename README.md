@@ -22,6 +22,8 @@ _BONUS
 
 This app will consist of a single screen with all the animations happening in a playbox. Nav links for my LinkedIn, Github, and Angel list will be featured at the top of page above the title. Within the playbox, the spaceships will spawn on the left side and move toward the right side of the screen. The player can see their word typed out at the bottom of the play screen with their score in the top right corner. Additionally, any bonus features will available at the bottom of the play box with themes available underneath.
 
+![](src/assets/gameanimation4.gif)
+
 ## Architecture and Technologies
 
 This project will be implemented in the following technologies:
