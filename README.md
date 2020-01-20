@@ -4,6 +4,8 @@ LMT is a typing game where aliens are trying to invade Earth and you have to def
 
 As the game progresses, aliens with larger words will start to spawn and will do so at a quicker rate. Additional information and features will be mapped out in the **Functionality & MVP** and **Features** sections.
 
+[Link to game](https://jasonmckenna00.github.io/Last-Man-Typing/)
+
 ## Functionality & MVP
 
 - [ ] Objects will spawn on one side of the screen with a word associated with it
