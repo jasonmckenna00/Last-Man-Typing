@@ -36,6 +36,19 @@ body{
     
 }
 
+.heading-container{
+    font-family: 'Frijole', cursive;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.heading-container a{
+    color: white;
+}
+
 .game-container{
     display: flex;
     /* width: 100%; */
@@ -88,7 +101,7 @@ canvas {
 
 .title-text{
     color: white;
-    margin-top: 185px;
+    margin-top: 120px;
     font-family: 'Frijole', cursive;
     font-size: 45px;
     display: inline-block;
@@ -174,4 +187,10 @@ canvas {
 }
 .leaderboard-stat-single h3{
     width: 50px;
+}
+
+.name-display{
+    font-family: "Frijole", cursive;
+    color: white;
+    font-size: 20px;
 }

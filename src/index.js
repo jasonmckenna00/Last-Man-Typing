@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     userForm.addEventListener('submit',handleSubmit);
     function handleSubmit(e){
         e.preventDefault();
-        game.checkWord(userInput.value.trim());
+        game.checkWord(userInput.value.toLowerCase().trim());
         userForm.reset();
     }
 
