@@ -104,8 +104,7 @@ class Game {
         this.typedChars += word.length;
         if (i != -1){
             this.score += 1;
-            this.alienArray.splice(i,1);
-            this.wordArray.splice(i,1);
+            this.alienArray[i].destroyed = true;           
             this.wordsDisplayed = this.wordArray.length ? true : false; 
             
         }
@@ -149,8 +148,13 @@ class Game {
 
 
         for (let i = 0; i < this.alienArray.length; i++){
-            if (this.alienArray[i].rendered){
-                this.alienArray[i].update(this.frameRate);
+            const currAlien = this.alienArray[i];
+            if (currAlien.rendered){
+                if (!currAlien.explosionCounter){
+                    this.alienArray.splice(i,1);
+                    this.wordArray.splice(i,1);
+                }
+                currAlien.update(this.frameRate);
             } 
             else {
                 this.lives -= 1;
