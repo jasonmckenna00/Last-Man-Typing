@@ -56,11 +56,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function restartgame(e){
             if (e.code === 'Space' && (event.ctrlKey)) {
-
+                const userInput = document.getElementById('userInput');
                 game = null;
                 game = new Game(canvas, ctx);
-                game.playGame();
                 userInput.autofocus = true;
+                const form = document.getElementById('getUserInput');
+                form.style.display = 'block';
+                game.playGame();
 
             } 
         }

@@ -31,7 +31,7 @@ class Game {
         this.typedChars = 0;
         this.dx = 1.7;
         this.score = 0;
-        this.lives = 10;
+        this.lives = 1;
         this.spawnrate = 0;
         this.time = 1;
         this.wpm = 0;
