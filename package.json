@@ -6,7 +6,6 @@
   "browserslist": [
     "last 1 version",
     "> 1%",
-    "maintained node versions",
     "not dead"
   ],
   "scripts": {
@@ -25,27 +24,26 @@
   },
   "homepage": "https://github.com/jasonmckenna00/Last-Man-Typing#readme",
   "dependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "autoprefixer": "^9.7.3",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.4.1",
-    "fibers": "^4.0.2",
-    "firebase": "^7.6.2",
-    "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.13.1",
-    "postcss-loader": "^3.0.0",
-    "random-words": "^1.1.0",
-    "sass": "^1.24.2",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.1.2",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1",
-    "webpack-merge": "^4.2.2"
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "autoprefixer": "^10.4.4",
+    "babel-loader": "^8.2.4",
+    "css-loader": "^6.7.1",
+    "firebase": "^9.6.10",
+    "mini-css-extract-plugin": "^2.6.0",
+    "node-sass": "^7.0.1",
+    "postcss-loader": "^6.2.1",
+    "random-words": "^1.1.2",
+    "sass": "^1.50.0",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.72.0",
+    "webpack-dev-server": "^4.8.1",
+    "webpack-merge": "^5.8.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
-    "url-loader": "^3.0.0"
+    "@babel/plugin-proposal-optional-chaining": "^7.16.7",
+    "url-loader": "^4.1.1",
+    "webpack-cli": "^4.9.2"
   }
 }

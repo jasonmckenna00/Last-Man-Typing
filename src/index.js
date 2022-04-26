@@ -1,8 +1,8 @@
 import Alien from './scripts/aliens'
 import Game from './scripts/game';
 // const fireBaseAPI = require('./scripts/firebasedb')
-import * as fireBaseAPI from './scripts/firebasedb';
-import addScore from './scripts/firebasedb';
+// import * as fireBaseAPI from './scripts/firebasedb';
+// import addScore from './scripts/firebasedb';
 
 
 
